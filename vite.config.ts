@@ -16,5 +16,13 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    host: true,
+    // Lets a Cloudflare quick tunnel (cloudflared tunnel --url ...) reach the dev server.
+    allowedHosts: [".trycloudflare.com"],
+  },
+  preview: {
+    port: 4173,
+    host: true,
+    allowedHosts: [".trycloudflare.com"],
   },
 });
