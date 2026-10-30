@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>GO LIVE</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Crect x='3' y='4' width='10' height='8' fill='%2333ff33'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1 id="site-title">ZACH MORIN</h1>
+        <div class="sub">broadcast console // <span id="provider-label">...</span></div>
+      </header>
+
+      <!-- Gate -->
+      <section id="gate" class="panel">
+        <p class="panel-title">access</p>
+        <form id="gate-form" class="row" autocomplete="off">
+          <label for="gate-input" id="gate-label">passphrase</label>
+          <input id="gate-input" type="password" autocomplete="off" spellcheck="false" />
+          <button type="submit" id="gate-btn">unlock</button>
+        </form>
+        <div id="gate-msg" class="sub"></div>
+      </section>
+
+      <!-- Console (hidden until unlocked) -->
+      <div id="console" class="hidden">
+        <section class="panel">
+          <p class="panel-title">inputs</p>
+          <div class="row">
+            <label for="cam-select">camera</label>
+            <select id="cam-select" disabled>
+              <option value="">(grant device access first)</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="mic-select">audio in</label>
+            <select id="mic-select" disabled>
+              <option value="">(grant device access first)</option>
+            </select>
+          </div>
+          <div class="row">
+            <button id="access-btn">request device access</button>
+            <button id="refresh-btn" disabled>refresh devices</button>
+            <button id="monitor-btn" disabled>monitor: off</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="panel-title">preview</p>
+          <div class="video-wrap">
+            <video id="preview" autoplay playsinline muted></video>
+            <div id="preview-overlay" class="video-overlay">
+              <div><span>NO CAMERA</span><span class="cursor"></span></div>
+            </div>
+          </div>
+          <div style="margin-top: 10px">
+            <canvas id="meter" class="meter"></canvas>
+            <div class="meter-readout">
+              <span id="meter-l">L -inf dBFS</span>
+              <span id="audio-fmt" class="sub">audio: --</span>
+              <span id="meter-r">R -inf dBFS</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="panel-title">transmit</p>
+          <div class="status">
+            <span id="tx-pill" class="pill">IDLE</span>
+            <span id="tx-detail" class="sub"></span>
+          </div>
+          <div class="row">
+            <button id="live-btn" disabled>go live</button>
+            <button id="stop-btn" class="danger hidden">end stream</button>
+            <a id="viewer-link" href="/" target="_blank" rel="noopener" class="sub">open viewer page</a>
+          </div>
+          <div id="tx-stats" class="stats"></div>
+        </section>
+      </div>
+
+      <hr />
+      <pre id="log" class="log" aria-live="polite"></pre>
+    </main>
+    <script type="module" src="/src/broadcaster.ts"></script>
+  </body>
+</html>

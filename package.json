@@ -1,0 +1,17 @@
+{
+  "name": "dj-stream",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Minimal personal live-streaming site: browser WHIP publish, WHEP playback, terminal aesthetic.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "seal": "node scripts/seal.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}
