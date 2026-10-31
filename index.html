@@ -51,21 +51,43 @@
 
     <div class="app">
       <header class="site-header">
-        <div class="site-header-inner">
-          <span class="checker" aria-hidden="true"></span>
-          <svg class="header-ring" aria-hidden="true"><use href="#g-ring" /></svg>
-          <h1 id="site-title" class="brand">SHRIMPIE LIVE FROM TAU CETI IV</h1>
-          <span class="header-flair" aria-hidden="true">
-            <span class="barcode acid"></span>
-            <span class="code">28 93</span>
-            <svg class="glyph"><use href="#g-tri" /></svg>
-            <span class="stripes"></span>
-            <span class="plus"></span>
-          </span>
-          <div class="status compact">
-            <span id="status-pill" class="pill">OFFLINE</span>
-            <span id="status-detail" class="detail"></span>
+        <h1 class="sr-only" id="site-title">SHRIMPIE LIVE FROM TAU CETI IV</h1>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <!-- Two identical sets = seamless loop. All items share one line height. -->
+            <div class="marquee-set">
+              <span class="checker"></span>
+              <svg class="header-ring"><use href="#g-ring" /></svg>
+              <span class="brand" data-brand>SHRIMPIE LIVE FROM TAU CETI IV</span>
+              <span class="barcode acid"></span>
+              <span class="code">28 93</span>
+              <svg class="glyph"><use href="#g-tri" /></svg>
+              <span class="stripes"></span>
+              <span class="plus"></span>
+              <span class="chevrons"><svg><use href="#g-chev" /></svg><svg><use href="#g-chev" /></svg><svg><use href="#g-chev" /></svg></span>
+              <span class="code">910 778</span>
+              <svg class="glyph"><use href="#g-x" /></svg>
+              <span class="signal-bars"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <div class="marquee-set">
+              <span class="checker"></span>
+              <svg class="header-ring"><use href="#g-ring" /></svg>
+              <span class="brand" data-brand>SHRIMPIE LIVE FROM TAU CETI IV</span>
+              <span class="barcode acid"></span>
+              <span class="code">28 93</span>
+              <svg class="glyph"><use href="#g-tri" /></svg>
+              <span class="stripes"></span>
+              <span class="plus"></span>
+              <span class="chevrons"><svg><use href="#g-chev" /></svg><svg><use href="#g-chev" /></svg><svg><use href="#g-chev" /></svg></span>
+              <span class="code">910 778</span>
+              <svg class="glyph"><use href="#g-x" /></svg>
+              <span class="signal-bars"><i></i><i></i><i></i><i></i></span>
+            </div>
           </div>
+        </div>
+        <div class="status compact header-status">
+          <span id="status-pill" class="pill">OFFLINE</span>
+          <span id="status-detail" class="detail"></span>
         </div>
       </header>
 

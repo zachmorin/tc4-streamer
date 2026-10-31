@@ -27,6 +27,9 @@ const settingsBtn = $<HTMLButtonElement>("ctrl-settings");
 const fsBtn = $<HTMLButtonElement>("ctrl-fs");
 
 titleEl.textContent = SITE_TITLE;
+document.querySelectorAll<HTMLElement>("[data-brand]").forEach((el) => {
+  el.textContent = SITE_TITLE;
+});
 document.title = `${SITE_TITLE} // LIVE`;
 
 type State = "offline" | "connecting" | "live" | "error";

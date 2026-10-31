@@ -42,7 +42,9 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   --pad: 0;
-  --header-h: 56px;
+  --header-h: 48px;
+  --marquee-gap: 28px;
+  --marquee-speed: 42s;
   --chat-w: min(340px, 32vw);
   --ctrl-h: 44px;
   --footer-h: 40px;
@@ -692,47 +694,172 @@ body.viewer {
   height: 100dvh;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .site-header {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: var(--header-h);
   background: var(--header);
   border-bottom: 1px solid var(--acid);
-  min-height: var(--header-h);
+  overflow: hidden;
 }
 
-.site-header-inner {
+.marquee {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 120px), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 120px), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  align-items: center;
+  animation: marquee var(--marquee-speed) linear infinite;
+  will-change: transform;
+}
+
+.marquee-set {
+  --band: 20px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px 16px;
-  min-width: 0;
-}
-
-.header-ring {
-  width: 18px;
-  height: 18px;
-  color: var(--acid);
+  height: 100%;
+  gap: var(--marquee-gap);
+  padding: 0 var(--marquee-gap);
   flex: none;
 }
 
-.brand {
+.marquee-set > * {
+  flex: none;
+}
+
+/* Brand + codes share one band height; glyphs/marks are sized to match. */
+.marquee-set .brand {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(22px, 3.2vw, 36px);
-  line-height: 1;
-  letter-spacing: 0.04em;
+  font-size: var(--band);
+  line-height: var(--band);
+  letter-spacing: 0.06em;
   color: var(--acid);
   text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
 }
 
-.header-flair {
+.marquee-set .code {
+  font-size: calc(var(--band) * 0.65);
+  letter-spacing: 0.2em;
+  line-height: var(--band);
+  height: var(--band);
+}
+
+.marquee-set .header-ring,
+.marquee-set .glyph {
+  width: var(--band);
+  height: var(--band);
+  color: var(--acid);
+}
+
+.marquee-set .header-ring,
+.marquee-set .glyph svg {
+  width: var(--band);
+  height: var(--band);
+  display: block;
+}
+
+.marquee-set .barcode,
+.marquee-set .stripes,
+.marquee-set .checker {
+  width: 72px;
+  height: var(--band);
+}
+
+.marquee-set .stripes {
+  width: 80px;
+}
+
+.marquee-set .checker {
+  width: 36px;
+  background-size: 9px 10px;
+}
+
+.marquee-set .plus {
+  width: var(--band);
+  height: var(--band);
+}
+
+.marquee-set .chevrons {
+  height: var(--band);
+  gap: 2px;
+  color: var(--acid);
+}
+
+.marquee-set .chevrons svg {
+  width: 12px;
+  height: var(--band);
+}
+
+.marquee-set .signal-bars {
+  height: var(--band);
+  gap: 3px;
+}
+
+.marquee-set .signal-bars i:nth-child(1) { height: 6px; }
+.marquee-set .signal-bars i:nth-child(2) { height: 10px; }
+.marquee-set .signal-bars i:nth-child(3) { height: 14px; }
+.marquee-set .signal-bars i:nth-child(4) { height: var(--band); }
+
+.header-status {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0 14px 0 40px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: none;
+  gap: 10px;
+  background: linear-gradient(90deg, transparent, var(--header) 28%);
+  z-index: 2;
+}
+
+.header-status .pill {
+  font-size: 18px;
+  min-width: 80px;
+  padding: 3px 8px 2px;
+}
+
+.header-status .detail {
+  max-width: 160px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 .stage {
@@ -1409,8 +1536,12 @@ h1.display {
     display: none;
   }
 
-  .header-flair .stripes,
-  .header-flair .barcode {
+  .marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 96px), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 96px), transparent);
+  }
+
+  .header-status .detail {
     display: none;
   }
 }
@@ -1464,28 +1595,27 @@ h1.display {
     display: none;
   }
 
-  .site-header-inner {
-    flex-wrap: wrap;
-    gap: 8px 10px;
-    padding: 10px 12px;
+  :root {
+    --header-h: 44px;
+    --marquee-gap: 20px;
+    --marquee-speed: 36s;
   }
 
-  .header-flair {
+  .marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 88px), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 88px), transparent);
+  }
+
+  .marquee-set {
+    --band: 16px;
+  }
+
+  .header-status {
+    padding: 0 10px 0 28px;
+  }
+
+  .header-status .detail {
     display: none;
-  }
-
-  .brand {
-    flex: 1 1 100%;
-    font-size: 22px;
-    white-space: normal;
-    line-height: 0.95;
-    overflow: visible;
-    text-overflow: unset;
-  }
-
-  .status.compact {
-    flex: 1 1 100%;
-    margin-left: 0;
   }
 
   .vol-slider {
