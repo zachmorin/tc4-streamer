@@ -1,0 +1,6 @@
+Self-hosted web fonts (latin subsets, woff2), both under the SIL Open Font License 1.1:
+
+- Bebas Neue      (c) Ryoichi Tsunekawa / Dharma Type   https://github.com/dharmatype/Bebas-Neue
+- JetBrains Mono  (c) JetBrains                          https://github.com/JetBrains/JetBrainsMono
+
+Full license text: https://openfontlicense.org
