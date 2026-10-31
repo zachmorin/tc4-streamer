@@ -147,26 +147,23 @@ export class StereoMeter {
     g.clearRect(0, 0, w, h);
 
     const css = getComputedStyle(document.documentElement);
-    const fg = css.getPropertyValue("--fg").trim() || "#33ff33";
-    const dim = css.getPropertyValue("--fg-dim").trim() || "#1f9a1f";
-    const faint = css.getPropertyValue("--fg-faint").trim() || "#0d4d0d";
-    const bright = css.getPropertyValue("--fg-bright").trim() || "#b6ffb6";
+    const fg = css.getPropertyValue("--fg").trim() || "#c8ff00";
+    const dim = css.getPropertyValue("--fg-dim").trim() || "#86a800";
+    const faint = css.getPropertyValue("--fg-faint").trim() || "#1a1f0a";
+    const bright = css.getPropertyValue("--fg-bright").trim() || "#f2f3ee";
     const danger = css.getPropertyValue("--danger").trim() || "#ff3b3b";
 
-    const labelW = 18;
-    const barX = labelW + 6;
-    const barW = w - barX - 6;
+    // Full-width bars so the HTML dB scale under the canvas lines up with the segments.
+    // Channel labels live in the markup next to the canvas.
+    const barX = 0;
+    const barW = w;
     const rowH = h / 2;
     const segs = 48;
     const segW = barW / segs;
-    g.font = "12px ui-monospace, Menlo, Consolas, monospace";
-    g.textBaseline = "middle";
 
     for (let ch = 0; ch < 2; ch++) {
-      const y = ch * rowH + 4;
-      const bh = rowH - 8;
-      g.fillStyle = dim;
-      g.fillText(ch === 0 ? "L" : "R", 4, y + bh / 2);
+      const y = ch * rowH + 3;
+      const bh = rowH - 6;
 
       const rms = r ? r.rmsDb[ch] : FLOOR_DB;
       const peak = r ? r.peakDb[ch] : FLOOR_DB;
@@ -176,11 +173,13 @@ export class StereoMeter {
       for (let s = 0; s < segs; s++) {
         const x = barX + s * segW;
         const segDb = FLOOR_DB + (s / segs) * -FLOOR_DB;
+        // Segments ramp up in height left-to-right: "signal bars", bottom-aligned.
+        const segH = Math.max(2, bh * (0.3 + 0.7 * ((s + 1) / segs)));
         let color = faint;
         if (s < litSegs) color = segDb > -6 ? bright : segDb > -18 ? fg : dim;
         if (s === peakSeg - 1 && peak > FLOOR_DB) color = bright;
         g.fillStyle = color;
-        g.fillRect(x + 1, y, Math.max(1, segW - 2), bh);
+        g.fillRect(x + 1, y + bh - segH, Math.max(1, segW - 2), segH);
       }
       if (r?.clipped[ch]) {
         g.fillStyle = danger;
