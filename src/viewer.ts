@@ -32,6 +32,51 @@ document.querySelectorAll<HTMLElement>("[data-brand]").forEach((el) => {
 });
 document.title = `${SITE_TITLE} // LIVE`;
 
+/** Seamless ticker: clone sets to fill the viewport, animate by exact set width. */
+function setupMarquee(): void {
+  const root = document.querySelector<HTMLElement>(".marquee");
+  const track = document.querySelector<HTMLElement>(".marquee-track");
+  const proto = track?.querySelector<HTMLElement>(".marquee-set");
+  if (!root || !track || !proto) return;
+
+  const PX_PER_SEC = 80;
+
+  const layout = () => {
+    // Reset to a single set, then clone.
+    track.querySelectorAll(".marquee-set").forEach((el, i) => {
+      if (i > 0) el.remove();
+    });
+    track.style.animation = "none";
+
+    // Force layout so widths are real after font load / resize.
+    const setWidth = proto.getBoundingClientRect().width;
+    const gap = Number.parseFloat(getComputedStyle(track).gap) || 0;
+    const unit = setWidth + gap;
+    if (unit <= 0) return;
+
+    const need = Math.max(2, Math.ceil((root.clientWidth + unit) / unit) + 1);
+    for (let i = 1; i < need; i++) {
+      const clone = proto.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll("[data-brand]").forEach((el) => {
+        el.textContent = SITE_TITLE;
+      });
+      track.appendChild(clone);
+    }
+
+    root.style.setProperty("--marquee-shift", `${unit}px`);
+    root.style.setProperty("--marquee-duration", `${unit / PX_PER_SEC}s`);
+    // Retrigger animation after measurement.
+    void track.offsetWidth;
+    track.style.animation = "";
+  };
+
+  const run = () => requestAnimationFrame(layout);
+  run();
+  document.fonts?.ready.then(run).catch(() => undefined);
+  window.addEventListener("resize", run);
+}
+setupMarquee();
+
 type State = "offline" | "connecting" | "live" | "error";
 
 let pc: RTCPeerConnection | null = null;

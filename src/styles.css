@@ -44,7 +44,8 @@
   --pad: 0;
   --header-h: 48px;
   --marquee-gap: 28px;
-  --marquee-speed: 42s;
+  --marquee-shift: 0px;
+  --marquee-duration: 20s;
   --chat-w: min(340px, 32vw);
   --ctrl-h: 44px;
   --footer-h: 40px;
@@ -729,7 +730,8 @@ body.viewer {
   width: max-content;
   height: 100%;
   align-items: center;
-  animation: marquee var(--marquee-speed) linear infinite;
+  gap: var(--marquee-gap);
+  animation: marquee var(--marquee-duration) linear infinite;
   will-change: transform;
 }
 
@@ -739,7 +741,6 @@ body.viewer {
   align-items: center;
   height: 100%;
   gap: var(--marquee-gap);
-  padding: 0 var(--marquee-gap);
   flex: none;
 }
 
@@ -852,7 +853,8 @@ body.viewer {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    /* Exact width of one set (+ track gap), measured in JS — no dead air at the seam. */
+    transform: translateX(calc(-1 * var(--marquee-shift)));
   }
 }
 
@@ -1598,7 +1600,6 @@ h1.display {
   :root {
     --header-h: 44px;
     --marquee-gap: 20px;
-    --marquee-speed: 36s;
   }
 
   .marquee {
