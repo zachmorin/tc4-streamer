@@ -1475,10 +1475,12 @@ h1.display {
   }
 
   .brand {
-    flex: 1 1 calc(100% - 60px);
-    font-size: 18px;
+    flex: 1 1 100%;
+    font-size: 22px;
     white-space: normal;
     line-height: 0.95;
+    overflow: visible;
+    text-overflow: unset;
   }
 
   .status.compact {
