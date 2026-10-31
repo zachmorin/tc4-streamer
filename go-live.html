@@ -4,87 +4,201 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
     <meta name="robots" content="noindex, nofollow" />
     <title>GO LIVE</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Crect x='3' y='4' width='10' height='8' fill='%2333ff33'/%3E%3C/svg%3E" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%23C8FF00' stroke-width='2.5'/%3E%3Cpath d='M12 7a5 5 0 0 1 0 10z' fill='%23C8FF00'/%3E%3C/svg%3E" />
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
-  <body>
+  <body class="console">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="g-ring" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.6" />
+        <path d="M12 6.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" />
+      </symbol>
+      <symbol id="g-tri" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="11" fill="currentColor" />
+        <path d="M7 9h10l-5 8z" fill="#000" />
+      </symbol>
+      <symbol id="g-x" viewBox="0 0 24 24">
+        <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="3.2" />
+      </symbol>
+      <symbol id="g-target" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" />
+        <circle cx="12" cy="12" r="4" fill="currentColor" />
+      </symbol>
+      <symbol id="g-chev" viewBox="0 0 12 16">
+        <path d="M0 0h4l6 8-6 8H0l6-8z" fill="currentColor" />
+      </symbol>
+    </svg>
+
+    <div class="marks" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div class="edge-text" aria-hidden="true">BROADCAST CONSOLE // WHIP UPLINK // 28 93 910 778 011</div>
+
     <main>
-      <header>
-        <h1 id="site-title">ZACH MORIN</h1>
-        <div class="sub">broadcast console // <span id="provider-label">...</span></div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="checker" aria-hidden="true"></span>
+          <span id="site-title" class="label">ZACH MORIN</span>
+          <span class="sep">/</span>
+          <span class="label dim">broadcast console</span>
+          <span class="sep">/</span>
+          <span id="provider-label" class="label dim">...</span>
+        </div>
+        <div class="topbar-right">
+          <span class="cjk" lang="zh">控制台</span>
+          <span class="code">28 93</span>
+          <span class="barcode" aria-hidden="true"></span>
+          <span class="plus" aria-hidden="true"></span>
+        </div>
       </header>
 
+      <section class="hero hero-sm">
+        <div class="title-lockup">
+          <h1 class="display">GO LIVE</h1>
+          <svg class="ring" aria-hidden="true"><use href="#g-ring" /></svg>
+        </div>
+        <div class="readout-strip">
+          <span class="barcode acid" aria-hidden="true"></span>
+          <svg class="glyph" aria-hidden="true"><use href="#g-x" /></svg>
+          <svg class="glyph" aria-hidden="true"><use href="#g-target" /></svg>
+          <span class="code">28 93</span>
+          <svg class="glyph" aria-hidden="true"><use href="#g-tri" /></svg>
+          <span class="tagline">whip publish / stereo opus 256k<br />"no processing. no compromise."</span>
+        </div>
+      </section>
+
       <!-- Gate -->
-      <section id="gate" class="panel">
-        <p class="panel-title">access</p>
-        <form id="gate-form" class="row" autocomplete="off">
+      <section id="gate" class="panel gate section">
+        <div class="panel-head">
+          <span class="code">01</span>
+          <span class="panel-title">access</span>
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="cjk" lang="zh">访问</span>
+        </div>
+        <form id="gate-form" class="gate-form" autocomplete="off">
           <label for="gate-input" id="gate-label">passphrase</label>
           <input id="gate-input" type="password" autocomplete="off" spellcheck="false" />
-          <button type="submit" id="gate-btn">unlock</button>
+          <button type="submit" id="gate-btn" class="btn btn-primary">unlock</button>
         </form>
-        <div id="gate-msg" class="sub"></div>
+        <div id="gate-msg" class="msg"></div>
       </section>
 
       <!-- Console (hidden until unlocked) -->
-      <div id="console" class="hidden">
-        <section class="panel">
-          <p class="panel-title">inputs</p>
-          <div class="row">
+      <div id="console" class="hidden console-grid section">
+        <section class="panel p-inputs">
+          <div class="panel-head">
+            <span class="code">02</span>
+            <span class="panel-title">inputs</span>
+            <span class="dimline" aria-hidden="true"></span>
+            <span class="cjk" lang="zh">输入</span>
+          </div>
+          <div class="field">
             <label for="cam-select">camera</label>
-            <select id="cam-select" disabled>
-              <option value="">(grant device access first)</option>
-            </select>
+            <div class="select-wrap">
+              <select id="cam-select" disabled>
+                <option value="">(grant device access first)</option>
+              </select>
+            </div>
           </div>
-          <div class="row">
+          <div class="field">
             <label for="mic-select">audio in</label>
-            <select id="mic-select" disabled>
-              <option value="">(grant device access first)</option>
-            </select>
+            <div class="select-wrap">
+              <select id="mic-select" disabled>
+                <option value="">(grant device access first)</option>
+              </select>
+            </div>
           </div>
-          <div class="row">
-            <button id="access-btn">request device access</button>
-            <button id="refresh-btn" disabled>refresh devices</button>
-            <button id="monitor-btn" disabled>monitor: off</button>
+          <div class="btn-row">
+            <button id="access-btn" class="btn">request device access</button>
+            <button id="refresh-btn" class="btn" disabled>refresh devices</button>
+            <button id="monitor-btn" class="btn" disabled>monitor: off</button>
           </div>
         </section>
 
-        <section class="panel">
-          <p class="panel-title">preview</p>
+        <section class="panel p-preview">
+          <div class="panel-head">
+            <span class="code">03</span>
+            <span class="panel-title">preview</span>
+            <span class="dimline" aria-hidden="true"></span>
+            <span class="cjk" lang="zh">预览</span>
+          </div>
           <div class="video-wrap">
             <video id="preview" autoplay playsinline muted></video>
             <div id="preview-overlay" class="video-overlay">
-              <div><span>NO CAMERA</span><span class="cursor"></span></div>
+              <div class="overlay-inner">
+                <svg class="ring-lg" aria-hidden="true"><use href="#g-ring" /></svg>
+                <span class="overlay-text">NO CAMERA</span>
+                <span class="stripes" aria-hidden="true"></span>
+              </div>
+            </div>
+            <span class="corner tl" aria-hidden="true"></span>
+            <span class="corner tr" aria-hidden="true"></span>
+            <span class="corner bl" aria-hidden="true"></span>
+            <span class="corner br" aria-hidden="true"></span>
+          </div>
+          <div class="meter-block">
+            <div class="meter-labels" aria-hidden="true"><span>L</span><span>R</span></div>
+            <canvas id="meter" class="meter"></canvas>
+            <div class="meter-scale" aria-hidden="true">
+              <span class="first" style="--p: 0">-60</span>
+              <span style="--p: 0.3333">-40</span>
+              <span style="--p: 0.6667">-20</span>
+              <span style="--p: 0.8">-12</span>
+              <span class="hot" style="--p: 0.9">-6</span>
+              <span class="last hot" style="--p: 1">0</span>
             </div>
           </div>
-          <div style="margin-top: 10px">
-            <canvas id="meter" class="meter"></canvas>
-            <div class="meter-readout">
-              <span id="meter-l">L -inf dBFS</span>
-              <span id="audio-fmt" class="sub">audio: --</span>
-              <span id="meter-r">R -inf dBFS</span>
-            </div>
+          <div class="meter-readout">
+            <span id="meter-l">L -inf dBFS</span>
+            <span id="audio-fmt" class="dim">audio: --</span>
+            <span id="meter-r">R -inf dBFS</span>
           </div>
         </section>
 
-        <section class="panel">
-          <p class="panel-title">transmit</p>
+        <section class="panel p-transmit">
+          <div class="panel-head">
+            <span class="code">04</span>
+            <span class="panel-title">transmit</span>
+            <span class="dimline" aria-hidden="true"></span>
+            <span class="cjk" lang="zh">发射</span>
+          </div>
           <div class="status">
             <span id="tx-pill" class="pill">IDLE</span>
-            <span id="tx-detail" class="sub"></span>
+            <span id="tx-detail" class="detail"></span>
           </div>
-          <div class="row">
-            <button id="live-btn" disabled>go live</button>
-            <button id="stop-btn" class="danger hidden">end stream</button>
-            <a id="viewer-link" href="/" target="_blank" rel="noopener" class="sub">open viewer page</a>
+          <div class="btn-row">
+            <button id="live-btn" class="btn btn-primary btn-xl" disabled>go live</button>
+            <button id="stop-btn" class="btn btn-hazard btn-xl hidden">end stream</button>
+            <a id="viewer-link" href="/" target="_blank" rel="noopener" class="link">open viewer page</a>
           </div>
           <div id="tx-stats" class="stats"></div>
         </section>
       </div>
 
-      <hr />
-      <pre id="log" class="log" aria-live="polite"></pre>
+      <section class="telemetry">
+        <div class="panel-head">
+          <span class="code">05</span>
+          <span class="panel-title">telemetry</span>
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="cjk" lang="zh">遥测</span>
+        </div>
+        <pre id="log" class="log" aria-live="polite"></pre>
+      </section>
+
+      <footer class="footer">
+        <span class="chevrons" aria-hidden="true">
+          <svg><use href="#g-chev" /></svg>
+          <svg><use href="#g-chev" /></svg>
+          <svg><use href="#g-chev" /></svg>
+        </span>
+        <span>whip uplink / webrtc</span>
+        <span class="cjk" lang="zh">上行</span>
+        <span class="spacer"></span>
+        <span class="code">910 778</span>
+        <span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </footer>
     </main>
     <script type="module" src="/src/broadcaster.ts"></script>
   </body>

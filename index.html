@@ -4,37 +4,121 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="Live DJ sets, streamed direct." />
     <title>LIVE</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Crect x='3' y='4' width='10' height='8' fill='%2333ff33'/%3E%3C/svg%3E" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%23C8FF00' stroke-width='2.5'/%3E%3Cpath d='M12 7a5 5 0 0 1 0 10z' fill='%23C8FF00'/%3E%3C/svg%3E" />
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
-  <body>
+  <body class="viewer">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="g-ring" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.6" />
+        <path d="M12 6.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" />
+      </symbol>
+      <symbol id="g-tri" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="11" fill="currentColor" />
+        <path d="M7 9h10l-5 8z" fill="#000" />
+      </symbol>
+      <symbol id="g-x" viewBox="0 0 24 24">
+        <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="3.2" />
+      </symbol>
+      <symbol id="g-target" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" />
+        <circle cx="12" cy="12" r="4" fill="currentColor" />
+      </symbol>
+      <symbol id="g-chev" viewBox="0 0 12 16">
+        <path d="M0 0h4l6 8-6 8H0l6-8z" fill="currentColor" />
+      </symbol>
+    </svg>
+
+    <div class="marks" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div class="edge-text" aria-hidden="true">LIVE.DJ // DIRECT FROM THE DECKS // 28 93 910 778 011</div>
+
     <main>
-      <header>
-        <h1 id="site-title">ZACH MORIN</h1>
-        <div class="sub">live.dj // direct from the decks</div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="checker" aria-hidden="true"></span>
+          <span class="label">LIVE.DJ</span>
+          <span class="sep">/</span>
+          <span class="label dim">direct from the decks</span>
+        </div>
+        <div class="topbar-right">
+          <span class="cjk" lang="zh">直播</span>
+          <span class="code">28 93</span>
+          <span class="barcode" aria-hidden="true"></span>
+          <span class="plus" aria-hidden="true"></span>
+        </div>
       </header>
 
-      <div class="status">
-        <span id="status-pill" class="pill">OFFLINE</span>
-        <span id="status-detail" class="sub"></span>
-      </div>
-
-      <div class="video-wrap">
-        <video id="player" autoplay playsinline></video>
-        <div id="overlay" class="video-overlay">
-          <div><span id="overlay-text">NO SIGNAL</span><span class="cursor"></span></div>
+      <section class="hero">
+        <div class="title-lockup">
+          <span class="plus lead" aria-hidden="true"></span>
+          <h1 id="site-title" class="display">ZACH MORIN</h1>
+          <svg class="ring" aria-hidden="true"><use href="#g-ring" /></svg>
+          <span class="plus trail" aria-hidden="true"></span>
         </div>
-      </div>
+        <div class="readout-strip">
+          <span class="barcode acid" aria-hidden="true"></span>
+          <svg class="glyph" aria-hidden="true"><use href="#g-x" /></svg>
+          <svg class="glyph" aria-hidden="true"><use href="#g-target" /></svg>
+          <span class="code">28 93</span>
+          <svg class="glyph" aria-hidden="true"><use href="#g-tri" /></svg>
+          <span class="tagline">live.dj / direct from the decks<br />"ultra-low latency via webrtc"</span>
+          <div class="status">
+            <span id="status-pill" class="pill">OFFLINE</span>
+            <span id="status-detail" class="detail"></span>
+          </div>
+        </div>
+      </section>
 
-      <div id="stats" class="stats"></div>
+      <section class="frame section">
+        <div class="frame-head">
+          <span class="code">01</span>
+          <span>signal</span>
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="cjk" lang="zh">信号</span>
+          <span class="plus" aria-hidden="true"></span>
+        </div>
+        <div class="video-wrap">
+          <video id="player" autoplay playsinline></video>
+          <div id="overlay" class="video-overlay">
+            <div class="overlay-inner">
+              <svg class="ring-lg" aria-hidden="true"><use href="#g-ring" /></svg>
+              <span id="overlay-text" class="overlay-text">NO SIGNAL</span>
+              <span class="stripes" aria-hidden="true"></span>
+            </div>
+          </div>
+          <span class="corner tl" aria-hidden="true"></span>
+          <span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span>
+          <span class="corner br" aria-hidden="true"></span>
+        </div>
+        <div id="stats" class="stats"></div>
+      </section>
 
-      <hr />
-      <pre id="log" class="log" aria-live="polite"></pre>
+      <section class="telemetry">
+        <div class="panel-head">
+          <span class="code">02</span>
+          <span class="panel-title">telemetry</span>
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="cjk" lang="zh">遥测</span>
+        </div>
+        <pre id="log" class="log" aria-live="polite"></pre>
+      </section>
 
-      <footer>
-        <span>ultra-low latency via WebRTC</span>
+      <footer class="footer">
+        <span class="chevrons" aria-hidden="true">
+          <svg><use href="#g-chev" /></svg>
+          <svg><use href="#g-chev" /></svg>
+          <svg><use href="#g-chev" /></svg>
+        </span>
+        <span>ultra-low latency via webrtc</span>
+        <span class="cjk" lang="zh">低延迟</span>
+        <span class="spacer"></span>
+        <span class="code">910 778</span>
+        <span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </footer>
     </main>
     <script type="module" src="/src/viewer.ts"></script>
