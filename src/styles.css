@@ -1368,6 +1368,62 @@ h1.display {
   margin-bottom: 12px;
 }
 
+.gain-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+
+.gain-wrap input[type="range"] {
+  width: 100%;
+  min-width: 0;
+  height: 4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  accent-color: var(--acid);
+  cursor: pointer;
+}
+
+.gain-wrap input[type="range"]:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.gain-wrap input[type="range"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.gain-wrap input[type="range"]:focus-visible {
+  outline: 1px solid var(--acid);
+  outline-offset: 4px;
+}
+
+.gain-readout {
+  min-width: 7.5rem;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acid);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.field-hint {
+  margin: -4px 0 0;
+  padding-left: calc(96px + 12px);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-dim);
+}
+
 .gate-form {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr) auto;

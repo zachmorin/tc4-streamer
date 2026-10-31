@@ -111,6 +111,23 @@
               </select>
             </div>
           </div>
+          <div class="field">
+            <label for="gain-slider">send level</label>
+            <div class="gain-wrap">
+              <input
+                id="gain-slider"
+                type="range"
+                min="0"
+                max="200"
+                step="1"
+                value="100"
+                disabled
+                aria-describedby="gain-readout"
+              />
+              <span id="gain-readout" class="gain-readout">100% / 0.0 dB</span>
+            </div>
+          </div>
+          <p class="field-hint">broadcast send gain (pre-WHIP). not viewer volume.</p>
           <div class="btn-row">
             <button id="access-btn" class="btn">request device access</button>
             <button id="refresh-btn" class="btn" disabled>refresh devices</button>

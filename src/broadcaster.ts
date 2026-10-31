@@ -10,6 +10,7 @@ import { getProvider, type Endpoint } from "./providers";
 import { hangup, negotiate, redactUrl } from "./lib/whip";
 import { tuneOpus } from "./lib/sdp";
 import { fmtDb, StereoMeter } from "./lib/meter";
+import { formatGainReadout, percentToLinear, SendGain } from "./lib/send-gain";
 import { unseal } from "./lib/seal";
 import { createLog, fmtDuration, fmtKbps } from "./lib/terminal";
 
@@ -93,6 +94,8 @@ function setupGate() {
 // ---------------------------------------------------------------------------
 const camSelect = $<HTMLSelectElement>("cam-select");
 const micSelect = $<HTMLSelectElement>("mic-select");
+const gainSlider = $<HTMLInputElement>("gain-slider");
+const gainReadout = $("gain-readout");
 const accessBtn = $<HTMLButtonElement>("access-btn");
 const refreshBtn = $<HTMLButtonElement>("refresh-btn");
 const monitorBtn = $<HTMLButtonElement>("monitor-btn");
@@ -104,12 +107,35 @@ const meterR = $("meter-r");
 const audioFmt = $("audio-fmt");
 
 const meter = new StereoMeter(meterCanvas);
+const sendGain = new SendGain();
 let localStream: MediaStream | null = null;
 let monitoring = false;
 let acquiring = false;
 
 const PREF_CAM = "dj-stream:cam";
 const PREF_MIC = "dj-stream:mic";
+const PREF_GAIN = "dj-stream:send-gain";
+
+function loadGainPercent(): number {
+  const raw = localStorage.getItem(PREF_GAIN);
+  const n = raw == null ? 100 : Number(raw);
+  if (!Number.isFinite(n)) return 100;
+  return Math.min(200, Math.max(0, Math.round(n)));
+}
+
+function syncGainUi(percent: number): void {
+  gainSlider.value = String(percent);
+  gainReadout.textContent = formatGainReadout(percent);
+}
+
+function applySendGain(percent: number): void {
+  const clamped = Math.min(200, Math.max(0, Math.round(percent)));
+  syncGainUi(clamped);
+  sendGain.setGain(percentToLinear(clamped));
+  localStorage.setItem(PREF_GAIN, String(clamped));
+}
+
+syncGainUi(loadGainPercent());
 
 async function listDevices(): Promise<void> {
   const devices = await navigator.mediaDevices.enumerateDevices();
@@ -143,10 +169,12 @@ function fill(sel: HTMLSelectElement, devices: MediaDeviceInfo[], preferred: str
 
 function stopLocal() {
   meter.detach();
+  sendGain.detach();
   localStream?.getTracks().forEach((t) => t.stop());
   localStream = null;
   preview.srcObject = null;
   previewOverlay.classList.remove("hidden");
+  gainSlider.disabled = true;
 }
 
 async function acquire(): Promise<void> {
@@ -160,15 +188,28 @@ async function acquire(): Promise<void> {
       audio: { ...AUDIO_CONSTRAINTS_BASE, ...(micId ? { deviceId: { exact: micId } } : {}) },
     };
     log(`requesting media: ${JSON.stringify(constraints.audio)}`);
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    const raw = await navigator.mediaDevices.getUserMedia(constraints);
 
-    const [audio] = stream.getAudioTracks();
-    const [video] = stream.getVideoTracks();
-    if (audio) {
+    const [rawAudio] = raw.getAudioTracks();
+    const [video] = raw.getVideoTracks();
+    if (rawAudio) {
       // Hint the encoder/processing pipeline that this is music, not speech.
-      if ("contentHint" in audio) audio.contentHint = "music";
-      await pushSampleRateToMax(audio);
+      if ("contentHint" in rawAudio) rawAudio.contentHint = "music";
+      await pushSampleRateToMax(rawAudio);
     }
+
+    // Route mic through GainNode before WHIP; keep raw capture constraints (no AGC).
+    let audio: MediaStreamTrack | null = null;
+    const gainPercent = loadGainPercent();
+    if (rawAudio) {
+      audio = await sendGain.attach(rawAudio, percentToLinear(gainPercent));
+      syncGainUi(gainPercent);
+      log(`send gain: ${formatGainReadout(gainPercent)} (Web Audio GainNode → WHIP)`, "bright");
+    } else {
+      sendGain.detach();
+    }
+
+    const stream = new MediaStream([...(audio ? [audio] : []), ...(video ? [video] : [])]);
 
     // If already live, swap tracks in place rather than renegotiating.
     if (pc && localStream) {
@@ -179,8 +220,11 @@ async function acquire(): Promise<void> {
       log("live tracks swapped", "ok");
     }
 
-    // Replace local stream.
-    localStream?.getTracks().forEach((t) => t.stop());
+    // Replace local stream (processed audio + camera). Raw mic is owned by sendGain.
+    localStream?.getTracks().forEach((t) => {
+      if (t.kind === "video") t.stop();
+      // Processed audio track from the previous graph is stopped via sendGain.attach/detach.
+    });
     localStream = stream;
     preview.srcObject = stream;
     previewOverlay.classList.toggle("hidden", !!video);
@@ -191,7 +235,7 @@ async function acquire(): Promise<void> {
         meterR.textContent = `R ${fmtDb(r.rmsDb[1])} pk ${fmtDb(r.peakDb[1])} dBFS${r.clipped[1] ? " CLIP" : ""}`;
       });
       meter.setMonitor(monitoring);
-      reportAudioSettings(audio);
+      reportAudioSettings(rawAudio!);
     }
     if (video) {
       const s = video.getSettings();
@@ -204,6 +248,7 @@ async function acquire(): Promise<void> {
     await listDevices();
     refreshBtn.disabled = false;
     monitorBtn.disabled = !audio;
+    gainSlider.disabled = !audio;
     liveBtn.disabled = !publishEndpoint || !audio;
     accessBtn.textContent = "re-acquire devices";
   } catch (e) {
@@ -269,6 +314,9 @@ accessBtn.addEventListener("click", () => void acquire());
 refreshBtn.addEventListener("click", () => void listDevices());
 camSelect.addEventListener("change", () => void acquire());
 micSelect.addEventListener("change", () => void acquire());
+gainSlider.addEventListener("input", () => {
+  applySendGain(Number(gainSlider.value));
+});
 monitorBtn.addEventListener("click", () => {
   monitoring = !monitoring;
   meter.setMonitor(monitoring);
