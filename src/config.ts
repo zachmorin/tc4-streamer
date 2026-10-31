@@ -1,4 +1,4 @@
-export const SITE_TITLE = (import.meta.env.VITE_SITE_TITLE ?? "ZACH MORIN").trim();
+export const SITE_TITLE = (import.meta.env.VITE_SITE_TITLE ?? "SHRIMPIE LIVE FROM TAU CETI IV").trim();
 
 /** How the broadcaster page obtains the publish secret. */
 export type SecretSource =

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Live DJ sets, streamed direct." />
+    <meta name="description" content="Shrimpie live from Tau Ceti IV." />
     <title>LIVE</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%23C8FF00' stroke-width='2.5'/%3E%3Cpath d='M12 7a5 5 0 0 1 0 10z' fill='%23C8FF00'/%3E%3C/svg%3E" />
     <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -21,106 +21,147 @@
         <circle cx="12" cy="12" r="11" fill="currentColor" />
         <path d="M7 9h10l-5 8z" fill="#000" />
       </symbol>
-      <symbol id="g-x" viewBox="0 0 24 24">
-        <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="3.2" />
+      <symbol id="g-play" viewBox="0 0 24 24">
+        <path d="M7 4l14 8-14 8z" fill="currentColor" />
       </symbol>
-      <symbol id="g-target" viewBox="0 0 24 24">
-        <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" />
-        <circle cx="12" cy="12" r="4" fill="currentColor" />
+      <symbol id="g-pause" viewBox="0 0 24 24">
+        <path d="M5 4h5v16H5zm9 0h5v16h-5z" fill="currentColor" />
+      </symbol>
+      <symbol id="g-vol" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a3.5 3.5 0 0 0-1.8-3.1v6.2A3.5 3.5 0 0 0 16.5 12zM15 4.2v2.1a6.5 6.5 0 0 1 0 11.4v2.1a8.5 8.5 0 0 0 0-15.6z" fill="currentColor" />
+      </symbol>
+      <symbol id="g-mute" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor" />
+        <path d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" fill="none" />
+      </symbol>
+      <symbol id="g-gear" viewBox="0 0 24 24">
+        <path d="M10 2h4l.6 2.4a7 7 0 0 1 1.7 1l2.3-.8 2 3.5-1.9 1.5a7 7 0 0 1 0 2l1.9 1.5-2 3.5-2.3-.8a7 7 0 0 1-1.7 1L14 22h-4l-.6-2.4a7 7 0 0 1-1.7-1l-2.3.8-2-3.5 1.9-1.5a7 7 0 0 1 0-2L3.4 9.1l2-3.5 2.3.8a7 7 0 0 1 1.7-1L10 2zm2 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="currentColor" />
+      </symbol>
+      <symbol id="g-fs" viewBox="0 0 24 24">
+        <path d="M3 3h7v2H5v5H3V3zm11 0h7v7h-2V5h-5V3zM3 14h2v5h5v2H3v-7zm16 0h2v7h-7v-2h5v-5z" fill="currentColor" />
       </symbol>
       <symbol id="g-chev" viewBox="0 0 12 16">
         <path d="M0 0h4l6 8-6 8H0l6-8z" fill="currentColor" />
       </symbol>
     </svg>
 
-    <div class="marks" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-    <div class="edge-text" aria-hidden="true">LIVE.DJ // DIRECT FROM THE DECKS // 28 93 910 778 011</div>
-
-    <main>
-      <header class="topbar">
-        <div class="topbar-left">
+    <div class="app">
+      <header class="site-header">
+        <div class="site-header-inner">
           <span class="checker" aria-hidden="true"></span>
-          <span class="label">LIVE.DJ</span>
-          <span class="sep">/</span>
-          <span class="label dim">direct from the decks</span>
-        </div>
-        <div class="topbar-right">
-          <span class="cjk" lang="zh">直播</span>
-          <span class="code">28 93</span>
-          <span class="barcode" aria-hidden="true"></span>
-          <span class="plus" aria-hidden="true"></span>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div class="title-lockup">
-          <span class="plus lead" aria-hidden="true"></span>
-          <h1 id="site-title" class="display">ZACH MORIN</h1>
-          <svg class="ring" aria-hidden="true"><use href="#g-ring" /></svg>
-          <span class="plus trail" aria-hidden="true"></span>
-        </div>
-        <div class="readout-strip">
-          <span class="barcode acid" aria-hidden="true"></span>
-          <svg class="glyph" aria-hidden="true"><use href="#g-x" /></svg>
-          <svg class="glyph" aria-hidden="true"><use href="#g-target" /></svg>
-          <span class="code">28 93</span>
-          <svg class="glyph" aria-hidden="true"><use href="#g-tri" /></svg>
-          <span class="tagline">live.dj / direct from the decks<br />"ultra-low latency via webrtc"</span>
-          <div class="status">
+          <svg class="header-ring" aria-hidden="true"><use href="#g-ring" /></svg>
+          <h1 id="site-title" class="brand">SHRIMPIE LIVE FROM TAU CETI IV</h1>
+          <span class="header-flair" aria-hidden="true">
+            <span class="barcode acid"></span>
+            <span class="code">28 93</span>
+            <svg class="glyph"><use href="#g-tri" /></svg>
+            <span class="stripes"></span>
+            <span class="plus"></span>
+          </span>
+          <div class="status compact">
             <span id="status-pill" class="pill">OFFLINE</span>
             <span id="status-detail" class="detail"></span>
           </div>
         </div>
-      </section>
+      </header>
 
-      <section class="frame section">
-        <div class="frame-head">
-          <span class="code">01</span>
-          <span>signal</span>
-          <span class="dimline" aria-hidden="true"></span>
-          <span class="cjk" lang="zh">信号</span>
-          <span class="plus" aria-hidden="true"></span>
-        </div>
-        <div class="video-wrap">
-          <video id="player" autoplay playsinline></video>
-          <div id="overlay" class="video-overlay">
-            <div class="overlay-inner">
-              <svg class="ring-lg" aria-hidden="true"><use href="#g-ring" /></svg>
-              <span id="overlay-text" class="overlay-text">NO SIGNAL</span>
-              <span class="stripes" aria-hidden="true"></span>
+      <div class="stage">
+        <section class="stage-main">
+          <div class="video-shell">
+            <div class="video-wrap" id="video-shell">
+              <video id="player" autoplay playsinline></video>
+              <div id="overlay" class="video-overlay">
+                <div class="overlay-inner">
+                  <svg class="ring-lg" aria-hidden="true"><use href="#g-ring" /></svg>
+                  <span id="overlay-text" class="overlay-text">NO SIGNAL</span>
+                  <span class="stripes" aria-hidden="true"></span>
+                </div>
+              </div>
+              <span class="corner tl" aria-hidden="true"></span>
+              <span class="corner tr" aria-hidden="true"></span>
+              <span class="corner bl" aria-hidden="true"></span>
+              <span class="corner br" aria-hidden="true"></span>
+            </div>
+
+            <div class="player-bar" role="group" aria-label="Playback controls">
+              <button type="button" id="ctrl-play" class="ctrl" title="Play / pause" aria-label="Play">
+                <svg><use href="#g-play" /></svg>
+              </button>
+              <button type="button" id="ctrl-mute" class="ctrl" title="Mute" aria-label="Mute">
+                <svg><use href="#g-vol" /></svg>
+              </button>
+              <input id="ctrl-vol" class="vol-slider" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume" />
+              <div class="live-track" aria-hidden="true">
+                <div id="live-fill" class="live-fill"></div>
+                <span id="live-label" class="live-label">STANDBY</span>
+              </div>
+              <button type="button" id="ctrl-settings" class="ctrl" title="Settings" aria-label="Settings" aria-expanded="false">
+                <svg><use href="#g-gear" /></svg>
+              </button>
+              <button type="button" id="ctrl-fs" class="ctrl" title="Fullscreen" aria-label="Fullscreen">
+                <svg><use href="#g-fs" /></svg>
+              </button>
+            </div>
+
+            <div id="settings-panel" class="settings-panel hidden">
+              <div id="stats" class="stats"></div>
+              <pre id="log" class="log" aria-live="polite"></pre>
             </div>
           </div>
-          <span class="corner tl" aria-hidden="true"></span>
-          <span class="corner tr" aria-hidden="true"></span>
-          <span class="corner bl" aria-hidden="true"></span>
-          <span class="corner br" aria-hidden="true"></span>
-        </div>
-        <div id="stats" class="stats"></div>
-      </section>
 
-      <section class="telemetry">
-        <div class="panel-head">
-          <span class="code">02</span>
-          <span class="panel-title">telemetry</span>
-          <span class="dimline" aria-hidden="true"></span>
-          <span class="cjk" lang="zh">遥测</span>
-        </div>
-        <pre id="log" class="log" aria-live="polite"></pre>
-      </section>
+          <footer class="site-footer">
+            <span class="chevrons" aria-hidden="true">
+              <svg><use href="#g-chev" /></svg>
+              <svg><use href="#g-chev" /></svg>
+              <svg><use href="#g-chev" /></svg>
+            </span>
+            <span class="barcode" aria-hidden="true"></span>
+            <span class="code">910 778</span>
+            <span class="footer-mark" aria-hidden="true">TAU CETI IV</span>
+            <span class="stripes" aria-hidden="true"></span>
+            <span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="plus" aria-hidden="true"></span>
+          </footer>
+        </section>
 
-      <footer class="footer">
-        <span class="chevrons" aria-hidden="true">
-          <svg><use href="#g-chev" /></svg>
-          <svg><use href="#g-chev" /></svg>
-          <svg><use href="#g-chev" /></svg>
-        </span>
-        <span>ultra-low latency via webrtc</span>
-        <span class="cjk" lang="zh">低延迟</span>
-        <span class="spacer"></span>
-        <span class="code">910 778</span>
-        <span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      </footer>
-    </main>
+        <aside class="chat" aria-label="Terminal chat">
+          <div class="chat-head">
+            <span class="code">01</span>
+            <span class="panel-title">terminal</span>
+            <span class="dimline" aria-hidden="true"></span>
+            <span class="cjk" lang="zh">通讯</span>
+          </div>
+
+          <div id="chat-gate" class="chat-gate">
+            <p class="chat-prompt">&gt; enter a name to join chat</p>
+            <form id="chat-name-form" class="chat-name-form" autocomplete="off">
+              <input id="chat-name" type="text" maxlength="24" spellcheck="false" placeholder="callsign" required />
+              <button type="submit" class="btn btn-primary">join</button>
+            </form>
+            <p class="chat-hint">no account. name only. emoji + gif ok.</p>
+          </div>
+
+          <div id="chat-room" class="chat-room hidden">
+            <div id="chat-log" class="chat-log" aria-live="polite"></div>
+            <div id="emoji-panel" class="emoji-panel hidden" role="listbox" aria-label="Emoji"></div>
+            <div id="gif-panel" class="gif-panel hidden">
+              <form id="gif-form" class="gif-form" autocomplete="off">
+                <input id="gif-url" type="url" placeholder="paste gif url (giphy / tenor / .gif)" />
+                <button type="submit" class="btn">send gif</button>
+              </form>
+            </div>
+            <form id="chat-form" class="chat-form" autocomplete="off">
+              <span id="chat-prompt-name" class="chat-user">&gt;</span>
+              <input id="chat-input" type="text" maxlength="280" spellcheck="false" placeholder="message" />
+              <button type="button" id="emoji-btn" class="ctrl chat-tool" title="Emoji" aria-label="Emoji">☺</button>
+              <button type="button" id="gif-btn" class="ctrl chat-tool" title="GIF" aria-label="GIF">GIF</button>
+              <button type="submit" class="btn">send</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </div>
+
     <script type="module" src="/src/viewer.ts"></script>
   </body>
 </html>

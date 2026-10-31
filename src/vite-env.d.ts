@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_WHIP_SEALED?: string;
   readonly VITE_LIVEKIT_WHIP_URL?: string;
   readonly VITE_LIVEKIT_STREAM_KEY_SEALED?: string;
+  readonly VITE_CHAT_WS?: string;
 }
 
 interface ImportMeta {
